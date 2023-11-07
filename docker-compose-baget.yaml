@@ -1,0 +1,15 @@
+services:
+  baget: 
+    restart: always
+    image: loicsharma/baget:latest
+    ports:
+      - 5555:80
+    volumes:
+      - C:\baget\baget-data:/var/baget
+    environment:
+      - ApiKey=E288FFFB-0CB7-4F80-B97B-E49B6763B95E
+      - Storage__Type=FileSystem
+      - Storage__Path=/var/baget/packages
+      - Database__Type=Sqlite
+      - Database__ConnectionString=Data Source=/var/baget/baget.db
+      - Search__Type=Database
