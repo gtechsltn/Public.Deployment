@@ -1,0 +1,22 @@
+services:
+  api: 
+    restart: always
+    image: api:latest
+    ports:
+      - 443:443
+      - 80:80
+    environment:
+      - Api__ImagesPath=/app/images
+      - Api__SqlServerConnectionString=Server=localhost;Database=Database;User Id=sa;Password=yourStrong(!)Password;Encrypt=False
+  mssql:
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - C:\envs\dev\sqlserver\data:/var/opt/mssql/data
+      - C:\envs\dev\sqlserver\log:/var/opt/mssql/log
+      - C:\envs\dev\sqlserver\secrets:/var/opt/mssql/secrets
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
