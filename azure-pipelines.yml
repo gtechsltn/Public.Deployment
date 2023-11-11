@@ -8,6 +8,17 @@ trigger: none
 pool:
   name: default
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: dev
+    displayName: Deploy dev
+    jobs:
+      - job: DeployDev
+        displayName: "Deploy dev"
+        steps:
+          - task: Docker@2
+            inputs:
+              command: 'build'
+              Dockerfile: '**/Dockerfile'
+              tags: 'latest'
+              arguments: '-t api'
+          
