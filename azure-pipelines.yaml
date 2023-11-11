@@ -17,6 +17,7 @@ stages:
         steps:
         - task: DockerCompose@0
           inputs:
-            containerregistrytype: 'Azure Container Registry'
+            containerregistrytype: 'Container Registry'
+            dockerRegistryEndpoint: 'GitHub'
             dockerComposeFile: '**/docker-compose-api.yaml'
             action: 'Run a Docker Compose command'
