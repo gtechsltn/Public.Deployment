@@ -19,7 +19,7 @@ stages:
           inputs:
             containerregistrytype: 'Container Registry'
             dockerRegistryEndpoint: 'GitHub'
-            dockerComposeFile: '**/docker-compose-api.yml'
+            dockerComposeFile: '**/docker-compose-api.yaml'
             action: 'Run a Docker Compose command'
             arguments: '-p local'
           
