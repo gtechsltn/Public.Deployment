@@ -15,10 +15,10 @@ stages:
       - job: DeployDev
         displayName: "Deploy dev"
         steps:
-          - task: Docker@2
-            inputs:
-              command: 'build'
-              Dockerfile: '**/Dockerfile'
-              tags: 'latest'
-              arguments: '-t api'
+        - task: DockerCompose@0
+          inputs:
+            containerregistrytype: 'Container Registry'
+            dockerRegistryEndpoint: 'GitHub'
+            dockerComposeFile: '**/docker-compose-api.yml'
+            action: 'Run a Docker Compose command'
           
