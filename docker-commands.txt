@@ -1,0 +1,7 @@
+docker build -t api .
+
+//Local
+docker-compose -f docker-compose-sqlserver.yaml -p local up -d
+
+docker-compose -f docker-compose-api.yaml -p local up -d
+docker-compose -f docker-compose-api.yaml -p dev up -d
