@@ -21,4 +21,5 @@ stages:
             dockerRegistryEndpoint: 'GitHub'
             dockerComposeFile: '**/docker-compose-api.yml'
             action: 'Run a Docker Compose command'
+            arguments: '-p local'
           
