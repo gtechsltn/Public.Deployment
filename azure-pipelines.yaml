@@ -15,9 +15,7 @@ stages:
       - job: DeployDev
         displayName: "Deploy dev"
         steps:
-        - task: DockerCompose@0
+        - task: PowerShell@2
           inputs:
-            containerregistrytype: 'Container Registry'
-            dockerRegistryEndpoint: 'GitHub'
-            dockerComposeFile: '**/docker-compose-api.yaml'
-            action: 'Run a Docker Compose command'
+            targetType: 'inline'
+            script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
