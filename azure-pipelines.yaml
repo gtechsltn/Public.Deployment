@@ -13,11 +13,15 @@ stages:
     jobs:
       - deployment: DeployDev
         displayName: "Deploy dev"
-        steps:
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+        environment: Dev
+        strategy:
+          runOnce:
+            deploy:              
+              steps:
+              - task: PowerShell@2
+                inputs:
+                  targetType: 'inline'
+                  script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
   - stage: UAT
     dependsOn: DEV
     jobs:
