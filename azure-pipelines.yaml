@@ -21,11 +21,24 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
-  - stage: Uat
+  - stage: QA
     dependsOn: Dev
     jobs:
       - deployment: Deploy
-        environment: Uat
+        environment: QA
+        strategy:
+          runOnce:
+            deploy:              
+              steps:
+              - task: PowerShell@2
+                inputs:
+                  targetType: 'inline'
+                  script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+  - stage: Prod
+    dependsOn: QA
+    jobs:
+      - deployment: Deploy
+        environment: Prod
         strategy:
           runOnce:
             deploy:              
