@@ -7,15 +7,23 @@ stages:
   - stage: Dev
     jobs:
       - deployment: Deploy
+        displayName: Deploy to Dev
         environment: Dev
         strategy:
           runOnce:
             deploy:              
               steps:
               - task: PowerShell@2
+                displayName: Deploy api
                 inputs:
                   targetType: 'inline'
                   script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+              - task: SqlDacpacDeploymentOnMachineGroup@0
+                displayName: Deploy database
+                inputs:
+                  TaskType: 'dacpac'
+                  TargetMethod: 'connectionString'
+                  ConnectionString: 'Server=localhost;Database=Database;User Id=sa;Password=yourStrong(!)Password;Encrypt=False'
   - stage: QA
     dependsOn: Dev
     jobs:
