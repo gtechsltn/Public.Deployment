@@ -9,10 +9,9 @@ pool:
   name: default
 
 stages:
-  - stage: DEV
+  - stage: Dev
     jobs:
-      - deployment: DeployDev
-        displayName: "Deploy dev"
+      - deployment: Deploy
         environment: Dev
         strategy:
           runOnce:
@@ -22,13 +21,16 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
-  - stage: UAT
-    dependsOn: DEV
+  - stage: Uat
+    dependsOn: Dev
     jobs:
-      - job: DeployUat
-        displayName: "Deploy uat"
-        steps:
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+      - deployment: Deploy
+        environment: Uat
+        strategy:
+          runOnce:
+            deploy:              
+              steps:
+              - task: PowerShell@2
+                inputs:
+                  targetType: 'inline'
+                  script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
