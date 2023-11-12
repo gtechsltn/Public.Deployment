@@ -19,3 +19,13 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+  - stage: uat
+    displayName: Deploy uat
+    jobs:
+      - job: DeployUat
+        displayName: "Deploy uat"
+        steps:
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
