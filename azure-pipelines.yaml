@@ -9,18 +9,17 @@ pool:
   name: default
 
 stages:
-  - stage: dev
-    displayName: Deploy dev
+  - stage: DEV
     jobs:
-      - job: DeployDev
+      - deployment: DeployDev
         displayName: "Deploy dev"
         steps:
         - task: PowerShell@2
           inputs:
             targetType: 'inline'
             script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
-  - stage: uat
-    displayName: Deploy uat
+  - stage: UAT
+    dependsOn: DEV
     jobs:
       - job: DeployUat
         displayName: "Deploy uat"
