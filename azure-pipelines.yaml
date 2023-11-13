@@ -18,10 +18,19 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+              - task: DownloadPipelineArtifact@2
+                displayName: Download database dacpac
+                inputs:
+                  buildType: 'specific'
+                  project: 'fa87d356-d9e8-410c-bf26-0078ed3b4646'
+                  definition: '5'
+                  buildVersionToDownload: 'latest'
+                  targetPath: '$(Pipeline.Workspace)'
               - task: SqlDacpacDeploymentOnMachineGroup@0
                 displayName: Deploy database
                 inputs:
                   TaskType: 'dacpac'
+                  DacpacFile: '$(Pipeline.Workspace)\Database.dacpac'
                   TargetMethod: 'connectionString'
                   ConnectionString: 'Server=localhost;Database=Database;User Id=sa;Password=yourStrong(!)Password;Encrypt=False'
   - stage: QA
