@@ -30,7 +30,7 @@ stages:
                 displayName: Deploy database
                 inputs:
                   TaskType: 'dacpac'
-                  DacpacFile: '$(Pipeline.Workspace)\Database.dacpac'
+                  DacpacFile: '$(Pipeline.Workspace)\Public.Database.dacpac'
                   TargetMethod: 'connectionString'
                   ConnectionString: 'Server=localhost;Database=Database;User Id=sa;Password=yourStrong(!)Password;Encrypt=False'
   - stage: QA
