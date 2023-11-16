@@ -16,7 +16,7 @@ stages:
                 displayName: Deploy api + sql server
                 inputs:
                   targetType: 'inline'
-                  script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
+                  script: 'docker-compose -f $(Build.SourcesDirectory)\docker-compose-api.yaml -p local up -d'
               - task: DownloadPipelineArtifact@2
                 displayName: Download database dacpac
                 inputs:
