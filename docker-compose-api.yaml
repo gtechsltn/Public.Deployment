@@ -4,7 +4,7 @@ services:
     image: api:latest
     ports:
       - 443:443
-      - 80:80
+      - 80:8080
     volumes:
       - C:\envs\local\images:/app/images
     environment:
