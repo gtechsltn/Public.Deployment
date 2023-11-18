@@ -41,6 +41,13 @@ stages:
                   definition: '3'
                   buildVersionToDownload: 'latest'
                   targetPath: '$(Pipeline.Workspace)'
+              - task: ExtractFiles@1
+                displayName: Extract functional tests artifact
+                inputs:
+                  archiveFilePatterns: '$(Pipeline.Workspace)/FunctionalTests/*.zip'
+                  destinationFolder: '$(Pipeline.Workspace)\FunctionalTests'
+                  cleanDestinationFolder: false
+                  overwriteExistingFiles: true
               - task: VSTest@3
                 displayName: Run functional tests
                 inputs:
