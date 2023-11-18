@@ -19,7 +19,7 @@ stages:
                   targetType: 'inline'
                   script: 'docker-compose -f docker-compose-api.yaml -p local up -d'
               - task: DownloadPipelineArtifact@2
-                displayName: Download database dacpac
+                displayName: Download database dacpac artifact
                 inputs:
                   buildType: 'specific'
                   project: 'fa87d356-d9e8-410c-bf26-0078ed3b4646'
@@ -33,6 +33,26 @@ stages:
                   DacpacFile: '$(Pipeline.Workspace)\Public.Database\Public.Database.dacpac'
                   TargetMethod: 'connectionString'
                   ConnectionString: 'Server=localhost;Database=Database;User Id=sa;Password=yourStrong(!)Password;Encrypt=False'
+              - task: DownloadPipelineArtifact@2
+                displayName: Download functional tests artifact
+                inputs:
+                  buildType: 'specific'
+                  project: 'fa87d356-d9e8-410c-bf26-0078ed3b4646'
+                  definition: '3'
+                  buildVersionToDownload: 'latest'
+                  targetPath: '$(Pipeline.Workspace)'
+              - task: VSTest@3
+                inputs:
+                  testSelector: 'testAssemblies'
+                  testAssemblyVer2: |
+                    **\*test*.dll
+                    !**\*TestAdapter.dll
+                    !**\obj\**
+                  searchFolder: '$(Pipeline.Workspace)'
+                  runInParallel: true
+                  codeCoverageEnabled: true
+                  diagnosticsEnabled: true
+
   - stage: QA
     dependsOn: Dev
     jobs:
