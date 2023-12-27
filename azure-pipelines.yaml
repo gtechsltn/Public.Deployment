@@ -50,7 +50,6 @@ stages:
                   destinationFolder: '$(Pipeline.Workspace)\FunctionalTests'
                   cleanDestinationFolder: false
                   overwriteExistingFiles: true
-              
               - task: VSTest@3
                 displayName: Run functional tests
                 inputs:
@@ -59,6 +58,7 @@ stages:
                     **\*test*.dll
                     !**\*TestAdapter.dll
                     !**\obj\**
+                    !**\testhost.*
                   searchFolder: '$(Pipeline.Workspace)'
                   runInParallel: true
                   codeCoverageEnabled: true
