@@ -55,10 +55,9 @@ stages:
                 inputs:
                   testSelector: 'testAssemblies'
                   testAssemblyVer2: |
-                    **\*test*.dll
+                    **\*Tests.dll
                     !**\*TestAdapter.dll
                     !**\obj\**
-                    !**\testhost.*
                   searchFolder: '$(Pipeline.Workspace)'
                   runInParallel: true
                   codeCoverageEnabled: true
