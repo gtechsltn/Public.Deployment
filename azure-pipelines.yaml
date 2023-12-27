@@ -8,6 +8,8 @@ stages:
     jobs:
       - deployment: Deploy
         environment: Dev
+        variables:
+          FunctionalTests__ApiUrl: "http://localhost:80"
         strategy:
           runOnce:
             deploy:              
@@ -48,6 +50,7 @@ stages:
                   destinationFolder: '$(Pipeline.Workspace)\FunctionalTests'
                   cleanDestinationFolder: false
                   overwriteExistingFiles: true
+              
               - task: VSTest@3
                 displayName: Run functional tests
                 inputs:
@@ -60,7 +63,6 @@ stages:
                   runInParallel: true
                   codeCoverageEnabled: true
                   diagnosticsEnabled: true
-
   - stage: QA
     dependsOn: Dev
     jobs:
